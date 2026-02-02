@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>The Violet Summer Alchemy | Science Day</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Playfair+Display:wght@600&display=swap" rel="stylesheet">
+
+<style>
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+  color: #f5f5f5;
+  overflow-x: hidden;
+}
+
+/* PARTICLE CANVAS */
+canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* MAIN CONTAINER */
+.container {
+  max-width: 1000px;
+  margin: auto;
+  padding: 40px 20px 60px;
+  text-align: center;
+  position: relative;
+  z-index: 3;
+}
+
+h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.8rem;
+  color: #c9e7ff;
+  letter-spacing: 1px;
+}
+
+.subtitle {
+  font-size: 1.05rem;
+  opacity: 0.85;
+  margin-bottom: 35px;
+}
+
+/* VIDEO */
+.video-box {
+  background: rgba(255,255,255,0.08);
+  border-radius: 22px;
+  padding: 16px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+  margin-bottom: 50px;
+}
+
+video {
+  width: 100%;
+  border-radius: 16px;
+}
+
+/* SECTION TITLE */
+.section-title {
+  font-size: 1.5rem;
+  margin: 35px 0 20px;
+  color: #b7dcff;
+}
+
+/* NAME CARDS */
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 18px;
+}
+
+.card {
+  background: rgba(255,255,255,0.07);
+  border-radius: 18px;
+  padding: 20px;
+  backdrop-filter: blur(8px);
+  transition: transform 0.3s;
+}
+
+.card:hover {
+  transform: translateY(-6px);
+}
+
+.card h3 {
+  margin: 0;
+  font-size: 1.1rem;
+  color: #e3f3ff;
+}
+
+.card p {
+  margin-top: 6px;
+  font-size: 0.9rem;
+  opacity: 0.8;
+}
+
+/* FOOTER */
+footer {
+  margin-top: 60px;
+  font-size: 0.85rem;
+  opacity: 0.7;
+}
+</style>
+</head>
+
+<body>
+
+<canvas id="particles"></canvas>
+
+<div class="container">
+
+  <h1>The Violet Summer Alchemy</h1>
+  <p class="subtitle">
+    A Science Day Educational Film<br>
+    Exploring Health, Balance & Community Well-Being
+  </p>
+
+  <!-- VIDEO -->
+  <div class="video-box">
+    <video controls>
+      <source src="science-day-video.mp4" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+  </div>
+
+  <!-- CONTRIBUTORS -->
+  <h2 class="section-title">Project Contributors</h2>
+
+  <div class="cards">
+    <div class="card">
+      <h3>Mr. Mallikarjun P</h3>
+      <p>Associate Professor<br>Community Health Nursing</p>
+    </div>
+    <div class="card">
+      <h3>Mr. Ganesh K</h3>
+      <p>M.Sc Nursing</p>
+    </div>
+    <div class="card">
+      <h3>Mr. Akhilesh V R</h3>
+      <p>B.Sc Nursing</p>
+    </div>
+    <div class="card">
+      <h3>Mr. David K</h3>
+      <p>B.Sc Nursing</p>
+    </div>
+    <div class="card">
+      <h3>Ms. Rakshita D</h3>
+      <p>B.Sc Nursing</p>
+    </div>
+  </div>
+
+  <footer>
+    © 2026 | Science Day Educational Initiative<br>
+    The Violet Summer Alchemy
+  </footer>
+
+</div>
+
+<script>
+const canvas = document.getElementById("particles");
+const ctx = canvas.getContext("2d");
+
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+window.addEventListener("resize", () => {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+});
+
+let particles = [];
+
+function createParticles(x, y) {
+  for (let i = 0; i < 20; i++) {
+    particles.push({
+      x,
+      y,
+      vx: (Math.random() - 0.5) * 4,
+      vy: (Math.random() - 0.5) * 4,
+      life: 60
+    });
+  }
+}
+
+window.addEventListener("click", e => createParticles(e.clientX, e.clientY));
+window.addEventListener("touchstart", e => {
+  const t = e.touches[0];
+  createParticles(t.clientX, t.clientY);
+});
+
+function animate() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  particles.forEach((p, i) => {
+    ctx.fillStyle = `rgba(120,200,255,${p.life/60})`;
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, 3, 0, Math.PI * 2);
+    ctx.fill();
+    p.x += p.vx;
+    p.y += p.vy;
+    p.life--;
+    if (p.life <= 0) particles.splice(i, 1);
+  });
+  requestAnimationFrame(animate);
+}
+animate();
+</script>
+
+</body>
+</html>
