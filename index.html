@@ -1,0 +1,489 @@
+ <!DOCTYPE html>
+ <html lang="en">
+ <head>
+ <meta charset="UTF-8">
+ <title>The Violet Summer Alchemy | Science Day</title>
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ 
+ <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Playfair+Display:wght@600&display=swap" rel="stylesheet">
+ 
+ <style>
++:root {
++  --violet-900: #0a0617;
++  --violet-800: #170a2b;
++  --violet-700: #2b0b53;
++  --violet-500: #7a40ff;
++  --violet-400: #b26cff;
++  --pink-300: #ff8de1;
++  --white-glow: rgba(255, 255, 255, 0.5);
++}
++
+ body {
+   margin: 0;
+   font-family: 'Poppins', sans-serif;
+-  background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+-  color: #f5f5f5;
++  background: radial-gradient(circle at top, var(--violet-700) 0%, var(--violet-800) 45%, var(--violet-900) 100%);
++  color: #f7f2ff;
+   overflow-x: hidden;
++  min-height: 100vh;
+ }
+ 
+ /* PARTICLE CANVAS */
+ canvas {
+   position: fixed;
+   top: 0;
+   left: 0;
+   pointer-events: none;
+   z-index: 2;
+ }
+ 
++.aurora {
++  position: fixed;
++  inset: 0;
++  background: radial-gradient(circle at 20% 10%, rgba(178, 108, 255, 0.25), transparent 55%),
++    radial-gradient(circle at 80% 20%, rgba(255, 141, 225, 0.18), transparent 50%),
++    radial-gradient(circle at 50% 80%, rgba(122, 64, 255, 0.22), transparent 55%);
++  animation: floatAurora 14s ease-in-out infinite;
++  mix-blend-mode: screen;
++  pointer-events: none;
++  z-index: 1;
++}
++
++@keyframes floatAurora {
++  0%, 100% {
++    transform: translateY(0);
++  }
++  50% {
++    transform: translateY(-30px);
++  }
++}
++
++/* GLOBAL GLOW */
++.touch-glow {
++  position: fixed;
++  width: 140px;
++  height: 140px;
++  border-radius: 50%;
++  pointer-events: none;
++  background: radial-gradient(circle, rgba(198,130,255,0.45) 0%, rgba(122,64,255,0.2) 45%, rgba(66,24,132,0) 70%);
++  box-shadow: 0 0 40px rgba(166, 98, 255, 0.7), 0 0 80px rgba(130, 70, 255, 0.4);
++  transform: translate(-50%, -50%) scale(0);
++  opacity: 0;
++  transition: transform 0.35s ease, opacity 0.35s ease;
++  z-index: 4;
++}
++
++.touch-glow.active {
++  opacity: 1;
++  transform: translate(-50%, -50%) scale(1);
++}
++
+ /* MAIN CONTAINER */
+ .container {
+   max-width: 1000px;
+   margin: auto;
+   padding: 40px 20px 60px;
+   text-align: center;
+   position: relative;
+   z-index: 3;
+ }
+ 
++.hero-badge {
++  display: inline-flex;
++  align-items: center;
++  gap: 10px;
++  padding: 8px 16px;
++  border-radius: 999px;
++  background: rgba(122, 64, 255, 0.2);
++  border: 1px solid rgba(255, 255, 255, 0.2);
++  box-shadow: 0 10px 30px rgba(122, 64, 255, 0.35);
++  font-size: 0.85rem;
++  letter-spacing: 0.8px;
++  text-transform: uppercase;
++  margin-bottom: 16px;
++}
++
+ h1 {
+   font-family: 'Playfair Display', serif;
+-  font-size: 2.8rem;
+-  color: #c9e7ff;
++  font-size: 3rem;
++  color: #f3d9ff;
+   letter-spacing: 1px;
++  text-shadow: 0 0 12px rgba(174, 98, 255, 0.6);
+ }
+ 
+ .subtitle {
+   font-size: 1.05rem;
+   opacity: 0.85;
+   margin-bottom: 35px;
+ }
+ 
+ /* VIDEO */
+ .video-box {
+   background: rgba(255,255,255,0.08);
+   border-radius: 22px;
+   padding: 16px;
+-  box-shadow: 0 20px 60px rgba(0,0,0,0.4);
++  box-shadow: 0 25px 70px rgba(65, 24, 120, 0.55);
+   margin-bottom: 50px;
++  position: relative;
++  overflow: hidden;
++}
++
++.video-box::before {
++  content: "";
++  position: absolute;
++  inset: 0;
++  border-radius: 22px;
++  border: 1px solid rgba(255, 255, 255, 0.12);
++  pointer-events: none;
++}
++
++.video-frame {
++  position: relative;
++  width: 100%;
++  aspect-ratio: 16 / 9;
++  border-radius: 16px;
++  overflow: hidden;
++  background: linear-gradient(120deg, rgba(115,62,255,0.2), rgba(255,150,230,0.2));
++  box-shadow: inset 0 0 30px rgba(255, 255, 255, 0.08);
++}
++
++.video-frame::after {
++  content: "";
++  position: absolute;
++  inset: 0;
++  background: radial-gradient(circle at top left, rgba(255,255,255,0.2), transparent 60%);
++  pointer-events: none;
+ }
+ 
+ video {
+   width: 100%;
++  height: 100%;
++  object-fit: cover;
+   border-radius: 16px;
+ }
+ 
++.video-caption {
++  margin: 12px auto 0;
++  font-size: 0.95rem;
++  color: #efe3ff;
++  opacity: 0.9;
++}
++
++.video-stats {
++  display: grid;
++  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
++  gap: 12px;
++  margin-top: 18px;
++}
++
++.stat-pill {
++  background: rgba(255, 255, 255, 0.08);
++  border: 1px solid rgba(255, 255, 255, 0.12);
++  border-radius: 14px;
++  padding: 10px 12px;
++  text-align: left;
++  font-size: 0.85rem;
++  box-shadow: 0 12px 28px rgba(65, 24, 120, 0.3);
++}
++
++.stat-pill strong {
++  display: block;
++  font-size: 1rem;
++  color: #f8e8ff;
++}
++
++/* INTERACTIVE ACTIONS */
++.actions {
++  display: grid;
++  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
++  gap: 16px;
++  margin: 32px 0 40px;
++}
++
++.action-card {
++  background: linear-gradient(145deg, rgba(122, 64, 255, 0.22), rgba(255, 144, 219, 0.15));
++  border: 1px solid rgba(255,255,255,0.15);
++  border-radius: 18px;
++  padding: 18px;
++  text-align: left;
++  box-shadow: 0 15px 35px rgba(41, 16, 88, 0.4);
++  transition: transform 0.3s ease, box-shadow 0.3s ease;
++}
++
++.action-card:hover {
++  transform: translateY(-6px) scale(1.01);
++  box-shadow: 0 20px 50px rgba(118, 52, 214, 0.55);
++}
++
++.action-card h3 {
++  margin: 0 0 6px;
++  font-size: 1.05rem;
++  color: #f6e7ff;
++}
++
++.action-card p {
++  margin: 0 0 12px;
++  font-size: 0.9rem;
++  opacity: 0.85;
++}
++
++.action-card button {
++  background: linear-gradient(120deg, var(--violet-400), var(--pink-300));
++  border: none;
++  color: #1a0e2f;
++  padding: 10px 14px;
++  border-radius: 999px;
++  font-weight: 600;
++  cursor: pointer;
++  box-shadow: 0 10px 25px rgba(178, 108, 255, 0.5);
++  transition: transform 0.2s ease, box-shadow 0.2s ease;
++}
++
++.action-card button:active {
++  transform: scale(0.95);
++  box-shadow: 0 6px 18px rgba(178, 108, 255, 0.35);
++}
++
+ /* SECTION TITLE */
+ .section-title {
+   font-size: 1.5rem;
+   margin: 35px 0 20px;
+-  color: #b7dcff;
++  color: #ead3ff;
+ }
+ 
+ /* NAME CARDS */
+ .cards {
+   display: grid;
+   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+   gap: 18px;
+ }
+ 
+ .card {
+   background: rgba(255,255,255,0.07);
+   border-radius: 18px;
+   padding: 20px;
+   backdrop-filter: blur(8px);
+-  transition: transform 0.3s;
++  transition: transform 0.3s, box-shadow 0.3s;
+ }
+ 
+ .card:hover {
+   transform: translateY(-6px);
++  box-shadow: 0 12px 26px rgba(160, 92, 255, 0.4);
+ }
+ 
+ .card h3 {
+   margin: 0;
+   font-size: 1.1rem;
+-  color: #e3f3ff;
++  color: #f3e6ff;
+ }
+ 
+ .card p {
+   margin-top: 6px;
+   font-size: 0.9rem;
+   opacity: 0.8;
+ }
+ 
+ /* FOOTER */
+ footer {
+   margin-top: 60px;
+   font-size: 0.85rem;
+   opacity: 0.7;
+ }
+ </style>
+ </head>
+ 
+ <body>
+ 
+ <canvas id="particles"></canvas>
++<div class="aurora"></div>
++<div class="touch-glow" id="touchGlow"></div>
+ 
+ <div class="container">
+ 
++  <div class="hero-badge">Science Day Showcase ✨</div>
+   <h1>The Violet Summer Alchemy</h1>
+   <p class="subtitle">
+     A Science Day Educational Film<br>
+     Exploring Health, Balance & Community Well-Being
+   </p>
+ 
+   <!-- VIDEO -->
+   <div class="video-box">
+-    <video controls>
+-      <source src="science-day-video.mp4" type="video/mp4">
+-      Your browser does not support the video tag.
+-    </video>
++    <div class="video-frame">
++      <video controls>
++        <source src="science-day-video.mp4" type="video/mp4">
++        Your browser does not support the video tag.
++      </video>
++    </div>
++    <p class="video-caption">A bright, kid-friendly 16:9 story about healthy habits and teamwork.</p>
++    <div class="video-stats">
++      <div class="stat-pill">
++        <strong>16:9 Magic</strong>
++        Cinematic view for judges.
++      </div>
++      <div class="stat-pill">
++        <strong>Kid-Friendly</strong>
++        Colorful scenes and music.
++      </div>
++      <div class="stat-pill">
++        <strong>Interactive</strong>
++        Tap to spark the glow.
++      </div>
++    </div>
++  </div>
++
++  <h2 class="section-title">Touch the Magic</h2>
++  <div class="actions">
++    <div class="action-card">
++      <h3>Glow Burst</h3>
++      <p>Tap anywhere to see the purple sparkle trail.</p>
++      <button type="button" data-action="burst">Make it glow</button>
++    </div>
++    <div class="action-card">
++      <h3>Violet Wave</h3>
++      <p>Trigger a gentle wave of light across the page.</p>
++      <button type="button" data-action="wave">Send a wave</button>
++    </div>
++    <div class="action-card">
++      <h3>Story Stars</h3>
++      <p>Launch stars that celebrate healthy choices.</p>
++      <button type="button" data-action="stars">Launch stars</button>
++    </div>
+   </div>
+ 
+   <!-- CONTRIBUTORS -->
+   <h2 class="section-title">Project Contributors</h2>
+ 
+   <div class="cards">
+     <div class="card">
+       <h3>Mr. Mallikarjun P</h3>
+       <p>Associate Professor<br>Community Health Nursing</p>
+     </div>
+     <div class="card">
+       <h3>Mr. Ganesh K</h3>
+       <p>M.Sc Nursing</p>
+     </div>
+     <div class="card">
+       <h3>Mr. Akhilesh V R</h3>
+       <p>B.Sc Nursing</p>
+     </div>
+     <div class="card">
+       <h3>Mr. David K</h3>
+       <p>B.Sc Nursing</p>
+     </div>
+     <div class="card">
+       <h3>Ms. Rakshita D</h3>
+       <p>B.Sc Nursing</p>
+     </div>
+   </div>
+ 
+   <footer>
+     © 2026 | Science Day Educational Initiative<br>
+     The Violet Summer Alchemy
+   </footer>
+ 
+ </div>
+ 
+ <script>
+ const canvas = document.getElementById("particles");
+ const ctx = canvas.getContext("2d");
++const glow = document.getElementById("touchGlow");
++const actionButtons = document.querySelectorAll(".action-card button");
+ 
+ canvas.width = window.innerWidth;
+ canvas.height = window.innerHeight;
+ 
+ window.addEventListener("resize", () => {
+   canvas.width = window.innerWidth;
+   canvas.height = window.innerHeight;
+ });
+ 
+ let particles = [];
+ 
+ function createParticles(x, y) {
+   for (let i = 0; i < 20; i++) {
+     particles.push({
+       x,
+       y,
+       vx: (Math.random() - 0.5) * 4,
+       vy: (Math.random() - 0.5) * 4,
+-      life: 60
++      life: 60,
++      radius: 2 + Math.random() * 3
+     });
+   }
+ }
+ 
+ window.addEventListener("click", e => createParticles(e.clientX, e.clientY));
+ window.addEventListener("touchstart", e => {
+   const t = e.touches[0];
+   createParticles(t.clientX, t.clientY);
+ });
+ 
++function showGlow(x, y) {
++  glow.style.left = `${x}px`;
++  glow.style.top = `${y}px`;
++  glow.classList.add("active");
++  clearTimeout(glow.fadeTimer);
++  glow.fadeTimer = setTimeout(() => glow.classList.remove("active"), 400);
++}
++
++window.addEventListener("pointerdown", e => showGlow(e.clientX, e.clientY));
++window.addEventListener("pointermove", e => {
++  if (e.pressure > 0) {
++    showGlow(e.clientX, e.clientY);
++  }
++});
++
++actionButtons.forEach(button => {
++  button.addEventListener("click", e => {
++    const rect = e.target.getBoundingClientRect();
++    const x = rect.left + rect.width / 2;
++    const y = rect.top + rect.height / 2;
++    showGlow(x, y);
++    if (e.target.dataset.action === "wave") {
++      for (let i = 0; i < 8; i++) {
++        setTimeout(() => createParticles(window.innerWidth * Math.random(), window.innerHeight * 0.3 + 120), i * 90);
++      }
++    } else if (e.target.dataset.action === "stars") {
++      for (let i = 0; i < 30; i++) {
++        createParticles(x + (Math.random() - 0.5) * 120, y + (Math.random() - 0.5) * 120);
++      }
++    } else {
++      createParticles(x, y);
++    }
++  });
++});
++
+ function animate() {
+   ctx.clearRect(0, 0, canvas.width, canvas.height);
+   particles.forEach((p, i) => {
+-    ctx.fillStyle = `rgba(120,200,255,${p.life/60})`;
++    ctx.fillStyle = `rgba(198,130,255,${p.life/60})`;
+     ctx.beginPath();
+-    ctx.arc(p.x, p.y, 3, 0, Math.PI * 2);
++    ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+     ctx.fill();
+     p.x += p.vx;
+     p.y += p.vy;
+     p.life--;
+     if (p.life <= 0) particles.splice(i, 1);
+   });
+   requestAnimationFrame(animate);
+ }
+ animate();
+ </script>
+ 
+ </body>
+ </html>
