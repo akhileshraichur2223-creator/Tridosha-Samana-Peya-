@@ -5,205 +5,231 @@
 <title>Tridosha Samana Peya</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 
 <style>
+:root{
+  --violet:#7c3aed;
+  --soft-violet:#ede9fe;
+  --indigo:#4338ca;
+}
+
 body{
   margin:0;
   font-family:'Poppins',sans-serif;
-  background:linear-gradient(135deg,#f3e8ff,#ede9fe,#faf5ff);
-  overflow:hidden;
-  color:#3b0764;
+  background:#ffffff;
+  color:#2e1065;
+  overflow-x:hidden;
 }
 
-/* PARTICLE CANVAS */
-#dust{
+/* BACKGROUND GLOW */
+#glow{
   position:fixed;
   inset:0;
   z-index:0;
 }
 
 /* MAIN */
-.main{
+.wrapper{
   position:relative;
   z-index:1;
-  padding:40px 20px 80px;
-  text-align:center;
+  max-width:1100px;
+  margin:auto;
+  padding:60px 20px 80px;
 }
 
-/* TITLE */
-h1{
+/* HERO */
+.hero{
+  text-align:center;
+  margin-bottom:60px;
+}
+
+.hero h1{
   font-size:3.2rem;
-  font-weight:800;
-  background:linear-gradient(90deg,#7c3aed,#a855f7,#6366f1);
+  font-weight:700;
+  background:linear-gradient(90deg,#6d28d9,#7c3aed,#4f46e5);
   -webkit-background-clip:text;
   -webkit-text-fill-color:transparent;
-  margin-bottom:10px;
 }
 
-.subtitle{
+.hero p{
   font-size:1.1rem;
-  color:#6d28d9;
-  margin-bottom:35px;
+  color:#5b21b6;
+  max-width:700px;
+  margin:15px auto 0;
 }
 
 /* VIDEO */
-.video-wrap{
-  max-width:900px;
-  margin:auto;
+.video-box{
+  margin:50px auto 0;
   padding:18px;
-  border-radius:26px;
-  background:rgba(255,255,255,0.75);
+  border-radius:28px;
+  background:linear-gradient(145deg,#faf5ff,#ffffff);
   box-shadow:
-    0 0 30px rgba(139,92,246,.45),
-    0 0 80px rgba(167,139,250,.25);
+    0 10px 40px rgba(124,58,237,.25),
+    0 0 0 1px rgba(124,58,237,.15);
 }
 
 video{
   width:100%;
-  border-radius:20px;
+  border-radius:22px;
+}
+
+/* INFO STRIP */
+.info{
+  margin:70px 0 50px;
+  padding:25px;
+  border-radius:18px;
+  background:var(--soft-violet);
+  text-align:center;
+  font-size:1rem;
+  color:#4c1d95;
 }
 
 /* CONTRIBUTORS */
-.contributors{
-  max-width:900px;
-  margin:60px auto 0;
-  padding:30px;
-  border-radius:24px;
-  background:linear-gradient(135deg,#ede9fe,#f5f3ff);
-  box-shadow:0 0 35px rgba(139,92,246,.35);
-}
-
 .contributors h2{
-  margin-bottom:20px;
-  font-size:1.8rem;
-  color:#5b21b6;
+  text-align:center;
+  margin-bottom:30px;
+  font-size:2rem;
+  color:#4c1d95;
 }
 
-.list{
+.grid{
   display:grid;
   grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
-  gap:15px;
-  text-align:left;
+  gap:22px;
 }
 
-.card{
-  padding:15px 18px;
-  background:white;
-  border-radius:16px;
-  box-shadow:0 0 15px rgba(139,92,246,.2);
+.person{
+  background:#ffffff;
+  padding:20px;
+  border-radius:18px;
+  box-shadow:0 8px 25px rgba(124,58,237,.15);
+  transition:.3s;
 }
 
-.card strong{
-  color:#4c1d95;
+.person:hover{
+  transform:translateY(-6px);
+}
+
+.person strong{
+  display:block;
+  color:#5b21b6;
 }
 
 /* FOOTER */
 footer{
-  margin-top:60px;
+  margin-top:70px;
+  text-align:center;
   font-size:.9rem;
   color:#6b21a8;
 }
 
 /* RESPONSIVE */
 @media(max-width:600px){
-  h1{font-size:2.4rem;}
+  .hero h1{font-size:2.4rem;}
 }
 </style>
 </head>
 
 <body>
 
-<canvas id="dust"></canvas>
+<canvas id="glow"></canvas>
 
-<div class="main">
-  <h1>Tridosha Samana Peya</h1>
-  <div class="subtitle">
-    A Magical Science-Based Community Health Innovation
-  </div>
+<div class="wrapper">
 
-  <div class="video-wrap">
-    <video autoplay muted loop controls>
+  <section class="hero">
+    <h1>Tridosha Samana Peya</h1>
+    <p>
+      A science-based functional beverage integrating Ayurveda and community health
+    </p>
+  </section>
+
+  <div class="video-box">
+    <video controls autoplay muted loop>
       <source src="science-day-video.mp4" type="video/mp4">
     </video>
   </div>
 
-  <!-- CONTRIBUTORS -->
-  <div class="contributors">
+  <div class="info">
+    Developed as part of a Community Health Nursing innovation focusing on hydration,
+    antioxidant defense, and Tridosha balance during extreme summer conditions.
+  </div>
+
+  <section class="contributors">
     <h2>Contributors</h2>
-    <div class="list">
-      <div class="card">
-        <strong>Mr. Mallikarjun P</strong><br>
+    <div class="grid">
+      <div class="person">
+        <strong>Mr. Mallikarjun P</strong>
         Associate Professor<br>
         Dept. of Community Health Nursing
       </div>
-
-      <div class="card">
-        <strong>Mr. Ganesh K</strong><br>
+      <div class="person">
+        <strong>Mr. Ganesh K</strong>
         MSc Nursing
       </div>
-
-      <div class="card">
-        <strong>Mr. Akhilesh V R</strong><br>
-        Project Lead & Concept Designer
+      <div class="person">
+        <strong>Mr. Akhilesh V R</strong>
+        Project Lead
       </div>
-
-      <div class="card">
-        <strong>Mr. David K</strong><br>
+      <div class="person">
+        <strong>Mr. David K</strong>
         Contributor
       </div>
-
-      <div class="card">
-        <strong>Ms. Rakshita D</strong><br>
+      <div class="person">
+        <strong>Ms. Rakshita D</strong>
         Contributor
       </div>
-
-      <div class="card">
-        <strong>BSc Nursing Students</strong><br>
+      <div class="person">
+        <strong>BSc Nursing Students</strong>
         Supporting Team
       </div>
     </div>
-  </div>
+  </section>
 
   <footer>
-    © Science Day Presentation | Community Health Nursing
+    © Science Day | Community Health Nursing
   </footer>
+
 </div>
 
 <script>
-const c=document.getElementById("dust");
-const x=c.getContext("2d");
+const c=document.getElementById("glow");
+const ctx=c.getContext("2d");
 function resize(){c.width=innerWidth;c.height=innerHeight;}
 resize();addEventListener("resize",resize);
 
-let p=[];
-for(let i=0;i<160;i++){
-  p.push({x:Math.random()*c.width,y:Math.random()*c.height,r:Math.random()*3+1,v:Math.random()*0.6+0.3});
+let dots=[];
+for(let i=0;i<120;i++){
+  dots.push({
+    x:Math.random()*c.width,
+    y:Math.random()*c.height,
+    r:Math.random()*2+1,
+    v:Math.random()*0.3+0.1
+  });
 }
 
-function draw(){
-  x.clearRect(0,0,c.width,c.height);
-  p.forEach(d=>{
-    x.beginPath();
-    x.arc(d.x,d.y,d.r,0,Math.PI*2);
-    x.fillStyle="rgba(167,139,250,0.8)";
-    x.fill();
+function animate(){
+  ctx.clearRect(0,0,c.width,c.height);
+  dots.forEach(d=>{
+    ctx.beginPath();
+    ctx.arc(d.x,d.y,d.r,0,Math.PI*2);
+    ctx.fillStyle="rgba(167,139,250,0.6)";
+    ctx.fill();
     d.y+=d.v;
     if(d.y>c.height)d.y=0;
   });
-  requestAnimationFrame(draw);
+  requestAnimationFrame(animate);
 }
-draw();
+animate();
 
-function burst(e){
-  for(let i=0;i<20;i++){
-    p.push({x:e.clientX,y:e.clientY,r:2,v:-Math.random()*3});
+/* gentle ripple on click */
+addEventListener("click",e=>{
+  for(let i=0;i<12;i++){
+    dots.push({x:e.clientX,y:e.clientY,r:2,v:-Math.random()*1.5});
   }
-}
-addEventListener("click",burst);
-addEventListener("touchstart",e=>burst(e.touches[0]));
+});
 </script>
 
 </body>
 </html>
-
