@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>TRIDOSHA SAMANA PEYA | Science Day</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Playfair+Display:wght@600&display=swap" rel="stylesheet">
+
+<style>
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(135deg, #0b1c2d, #162b3c, #1f4e5f);
+  color: #eef7ff;
+  overflow-x: hidden;
+}
+
+/* Particle Canvas */
+canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* Container */
+.container {
+  max-width: 1000px;
+  margin: auto;
+  padding: 45px 20px 70px;
+  text-align: center;
+  position: relative;
+  z-index: 3;
+}
+
+/* Title */
+h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: 3rem;
+  letter-spacing: 2px;
+  color: #c9eaff;
+  margin-bottom: 8px;
+  text-shadow: 0 0 18px rgba(140,200,255,0.6);
+}
+
+/* Pulse underline */
+.pulse {
+  width: 160px;
+  height: 4px;
+  margin: 12px auto 28px;
+  background: linear-gradient(90deg, #66c2ff, #b3e5ff);
+  border-radius: 10px;
+  animation: pulse 2.5s infinite;
+}
+
+@keyframes pulse {
+  0% { opacity: 0.3; }
+  50% { opacity: 1; }
+  100% { opacity: 0.3; }
+}
+
+.subtitle {
+  font-size: 1.05rem;
+  opacity: 0.85;
+  margin-bottom: 40px;
+}
+
+/* Video Box */
+.video-box {
+  background: rgba(255,255,255,0.08);
+  border-radius: 22px;
+  padding: 16px;
+  box-shadow: 0 25px 70px rgba(0,0,0,0.45);
+  margin-bottom: 55px;
+  transition: transform 0.4s, box-shadow 0.4s;
+}
+
+.video-box:hover {
+  transform: scale(1.01);
+  box-shadow: 0 30px 90px rgba(100,180,255,0.4);
+}
+
+video {
+  width: 100%;
+  border-radius: 16px;
+}
+
+/* Section Title */
+.section-title {
+  font-size: 1.6rem;
+  margin: 40px 0 22px;
+  color: #bfe6ff;
+}
+
+/* Cards */
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 18px;
+}
+
+.card {
+  background: rgba(255,255,255,0.07);
+  border-radius: 18px;
+  padding: 22px;
+  backdrop-filter: blur(10px);
+  transition: transform 0.35s, box-shadow 0.35s;
+  cursor: pointer;
+}
+
+.card:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 18px 45px rgba(120,200,255,0.35);
+}
+
+.card h3 {
+  margin: 0;
+  font-size: 1.1rem;
+  color: #e6f4ff;
+}
+
+.card p {
+  margin-top: 6px;
+  font-size: 0.9rem;
+  opacity: 0.8;
+}
+
+/* Footer */
+footer {
+  margin-top: 70px;
+  font-size: 0.85rem;
+  opacity: 0.75;
+}
+</style>
+</head>
+
+<body>
+
+<canvas id="particles"></canvas>
+
+<div class="container">
+
+  <h1>TRIDOSHA SAMANA PEYA</h1>
+  <div class="pulse"></div>
+
+  <p class="subtitle">
+    A Science Day Educational Film<br>
+    Exploring Balance, Health & Community Well-Being
+  </p>
+
+  <!-- Video -->
+  <div class="video-box">
+    <video controls>
+      <source src="science-day-video.mp4" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+  </div>
+
+  <!-- Contributors -->
+  <h2 class="section-title">Contributors</h2>
+
+  <div class="cards">
+    <div class="card"><h3>Mr. Mallikarjun P</h3><p>Associate Professor<br>Community Health Nursing</p></div>
+    <div class="card"><h3>Mr. Ganesh K</h3><p>M.Sc Nursing</p></div>
+    <div class="card"><h3>Mr. Akhilesh V R</h3><p>B.Sc Nursing</p></div>
+    <div class="card"><h3>Mr. David K</h3><p>B.Sc Nursing</p></div>
+    <div class="card"><h3>Ms. Rakshita D</h3><p>B.Sc Nursing</p></div>
+  </div>
+
+  <footer>
+    © 2026 | Science Day Educational Initiative<br>
+    TRIDOSHA SAMANA PEYA
+  </footer>
+
+</div>
+
+<script>
+const canvas = document.getElementById("particles");
+const ctx = canvas.getContext("2d");
+
+function resize() {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+}
+resize();
+window.addEventListener("resize", resize);
+
+let particles = [];
+
+function createParticles(x, y) {
+  for (let i = 0; i < 24; i++) {
+    particles.push({
+      x,
+      y,
+      vx: (Math.random() - 0.5) * 5,
+      vy: (Math.random() - 0.5) * 5,
+      life: 70
+    });
+  }
+}
+
+window.addEventListener("click", e => createParticles(e.clientX, e.clientY));
+window.addEventListener("touchstart", e => {
+  const t = e.touches[0];
+  createParticles(t.clientX, t.clientY);
+});
+
+function animate() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  particles.forEach((p, i) => {
+    ctx.fillStyle = `rgba(130,210,255,${p.life/70})`;
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, 3, 0, Math.PI * 2);
+    ctx.fill();
+    p.x += p.vx;
+    p.y += p.vy;
+    p.life--;
+    if (p.life <= 0) particles.splice(i, 1);
+  });
+  requestAnimationFrame(animate);
+}
+animate();
+</script>
+
+</body>
+</html>
