@@ -5,141 +5,205 @@
 <title>Tridosha Samana Peya</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<!-- GOOGLE FONT -->
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
 
 <style>
 body{
   margin:0;
   font-family:'Poppins',sans-serif;
-  background:radial-gradient(circle at top,#3b0764,#12021f 70%);
-  color:#f5eaff;
+  background:linear-gradient(135deg,#f3e8ff,#ede9fe,#faf5ff);
   overflow:hidden;
+  color:#3b0764;
 }
 
 /* PARTICLE CANVAS */
-#particles{
+#dust{
   position:fixed;
   inset:0;
   z-index:0;
 }
 
-/* MAIN CONTENT */
+/* MAIN */
 .main{
   position:relative;
   z-index:1;
+  padding:40px 20px 80px;
   text-align:center;
-  padding:50px 20px;
 }
 
+/* TITLE */
 h1{
-  font-size:2.8rem;
-  color:#e9d5ff;
-  text-shadow:0 0 25px #c084fc;
+  font-size:3.2rem;
+  font-weight:800;
+  background:linear-gradient(90deg,#7c3aed,#a855f7,#6366f1);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  margin-bottom:10px;
 }
 
-p{
-  opacity:.85;
-  margin-bottom:30px;
+.subtitle{
+  font-size:1.1rem;
+  color:#6d28d9;
+  margin-bottom:35px;
 }
 
-/* VIDEO BOX */
-.video-box{
+/* VIDEO */
+.video-wrap{
   max-width:900px;
   margin:auto;
-  padding:15px;
-  border-radius:22px;
-  background:rgba(255,255,255,0.08);
-  box-shadow:0 0 40px rgba(192,132,252,.6);
+  padding:18px;
+  border-radius:26px;
+  background:rgba(255,255,255,0.75);
+  box-shadow:
+    0 0 30px rgba(139,92,246,.45),
+    0 0 80px rgba(167,139,250,.25);
 }
 
 video{
   width:100%;
-  border-radius:18px;
+  border-radius:20px;
+}
+
+/* CONTRIBUTORS */
+.contributors{
+  max-width:900px;
+  margin:60px auto 0;
+  padding:30px;
+  border-radius:24px;
+  background:linear-gradient(135deg,#ede9fe,#f5f3ff);
+  box-shadow:0 0 35px rgba(139,92,246,.35);
+}
+
+.contributors h2{
+  margin-bottom:20px;
+  font-size:1.8rem;
+  color:#5b21b6;
+}
+
+.list{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:15px;
+  text-align:left;
+}
+
+.card{
+  padding:15px 18px;
+  background:white;
+  border-radius:16px;
+  box-shadow:0 0 15px rgba(139,92,246,.2);
+}
+
+.card strong{
+  color:#4c1d95;
 }
 
 /* FOOTER */
 footer{
-  margin-top:40px;
-  font-size:.85rem;
-  opacity:.7;
+  margin-top:60px;
+  font-size:.9rem;
+  color:#6b21a8;
+}
+
+/* RESPONSIVE */
+@media(max-width:600px){
+  h1{font-size:2.4rem;}
 }
 </style>
 </head>
 
 <body>
 
-<canvas id="particles"></canvas>
+<canvas id="dust"></canvas>
 
 <div class="main">
   <h1>Tridosha Samana Peya</h1>
-  <p>A Magical Science Day Presentation</p>
+  <div class="subtitle">
+    A Magical Science-Based Community Health Innovation
+  </div>
 
-  <div class="video-box">
-    <video controls autoplay muted loop>
+  <div class="video-wrap">
+    <video autoplay muted loop controls>
       <source src="science-day-video.mp4" type="video/mp4">
-      Your browser does not support video.
     </video>
   </div>
 
+  <!-- CONTRIBUTORS -->
+  <div class="contributors">
+    <h2>Contributors</h2>
+    <div class="list">
+      <div class="card">
+        <strong>Mr. Mallikarjun P</strong><br>
+        Associate Professor<br>
+        Dept. of Community Health Nursing
+      </div>
+
+      <div class="card">
+        <strong>Mr. Ganesh K</strong><br>
+        MSc Nursing
+      </div>
+
+      <div class="card">
+        <strong>Mr. Akhilesh V R</strong><br>
+        Project Lead & Concept Designer
+      </div>
+
+      <div class="card">
+        <strong>Mr. David K</strong><br>
+        Contributor
+      </div>
+
+      <div class="card">
+        <strong>Ms. Rakshita D</strong><br>
+        Contributor
+      </div>
+
+      <div class="card">
+        <strong>BSc Nursing Students</strong><br>
+        Supporting Team
+      </div>
+    </div>
+  </div>
+
   <footer>
-    © Science Day | Community Health Nursing
+    © Science Day Presentation | Community Health Nursing
   </footer>
 </div>
 
 <script>
-const canvas=document.getElementById("particles");
-const ctx=canvas.getContext("2d");
+const c=document.getElementById("dust");
+const x=c.getContext("2d");
+function resize(){c.width=innerWidth;c.height=innerHeight;}
+resize();addEventListener("resize",resize);
 
-function resize(){
-  canvas.width=window.innerWidth;
-  canvas.height=window.innerHeight;
-}
-resize();
-window.addEventListener("resize",resize);
-
-let dots=[];
-
-for(let i=0;i<120;i++){
-  dots.push({
-    x:Math.random()*canvas.width,
-    y:Math.random()*canvas.height,
-    r:Math.random()*2+1,
-    v:Math.random()*0.6+0.2
-  });
+let p=[];
+for(let i=0;i<160;i++){
+  p.push({x:Math.random()*c.width,y:Math.random()*c.height,r:Math.random()*3+1,v:Math.random()*0.6+0.3});
 }
 
 function draw(){
-  ctx.clearRect(0,0,canvas.width,canvas.height);
-  dots.forEach(d=>{
-    ctx.beginPath();
-    ctx.arc(d.x,d.y,d.r,0,Math.PI*2);
-    ctx.fillStyle="rgba(196,132,252,0.8)";
-    ctx.fill();
+  x.clearRect(0,0,c.width,c.height);
+  p.forEach(d=>{
+    x.beginPath();
+    x.arc(d.x,d.y,d.r,0,Math.PI*2);
+    x.fillStyle="rgba(167,139,250,0.8)";
+    x.fill();
     d.y+=d.v;
-    if(d.y>canvas.height) d.y=0;
+    if(d.y>c.height)d.y=0;
   });
   requestAnimationFrame(draw);
 }
 draw();
 
-/* TOUCH / CLICK BURST */
-function burst(x,y){
+function burst(e){
   for(let i=0;i<20;i++){
-    dots.push({
-      x:x,
-      y:y,
-      r:2,
-      v:-Math.random()*3
-    });
+    p.push({x:e.clientX,y:e.clientY,r:2,v:-Math.random()*3});
   }
 }
-
-window.addEventListener("click",e=>burst(e.clientX,e.clientY));
-window.addEventListener("touchstart",e=>{
-  burst(e.touches[0].clientX,e.touches[0].clientY);
-});
+addEventListener("click",burst);
+addEventListener("touchstart",e=>burst(e.touches[0]));
 </script>
 
 </body>
 </html>
+
