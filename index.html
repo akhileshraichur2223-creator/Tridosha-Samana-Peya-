@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Tridosha Samana Peya</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- GOOGLE FONT -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+body{
+  margin:0;
+  font-family:'Poppins',sans-serif;
+  background:radial-gradient(circle at top,#3b0764,#12021f 70%);
+  color:#f5eaff;
+  overflow:hidden;
+}
+
+/* PARTICLE CANVAS */
+#particles{
+  position:fixed;
+  inset:0;
+  z-index:0;
+}
+
+/* MAIN CONTENT */
+.main{
+  position:relative;
+  z-index:1;
+  text-align:center;
+  padding:50px 20px;
+}
+
+h1{
+  font-size:2.8rem;
+  color:#e9d5ff;
+  text-shadow:0 0 25px #c084fc;
+}
+
+p{
+  opacity:.85;
+  margin-bottom:30px;
+}
+
+/* VIDEO BOX */
+.video-box{
+  max-width:900px;
+  margin:auto;
+  padding:15px;
+  border-radius:22px;
+  background:rgba(255,255,255,0.08);
+  box-shadow:0 0 40px rgba(192,132,252,.6);
+}
+
+video{
+  width:100%;
+  border-radius:18px;
+}
+
+/* FOOTER */
+footer{
+  margin-top:40px;
+  font-size:.85rem;
+  opacity:.7;
+}
+</style>
+</head>
+
+<body>
+
+<canvas id="particles"></canvas>
+
+<div class="main">
+  <h1>Tridosha Samana Peya</h1>
+  <p>A Magical Science Day Presentation</p>
+
+  <div class="video-box">
+    <video controls autoplay muted loop>
+      <source src="science-day-video.mp4" type="video/mp4">
+      Your browser does not support video.
+    </video>
+  </div>
+
+  <footer>
+    © Science Day | Community Health Nursing
+  </footer>
+</div>
+
+<script>
+const canvas=document.getElementById("particles");
+const ctx=canvas.getContext("2d");
+
+function resize(){
+  canvas.width=window.innerWidth;
+  canvas.height=window.innerHeight;
+}
+resize();
+window.addEventListener("resize",resize);
+
+let dots=[];
+
+for(let i=0;i<120;i++){
+  dots.push({
+    x:Math.random()*canvas.width,
+    y:Math.random()*canvas.height,
+    r:Math.random()*2+1,
+    v:Math.random()*0.6+0.2
+  });
+}
+
+function draw(){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  dots.forEach(d=>{
+    ctx.beginPath();
+    ctx.arc(d.x,d.y,d.r,0,Math.PI*2);
+    ctx.fillStyle="rgba(196,132,252,0.8)";
+    ctx.fill();
+    d.y+=d.v;
+    if(d.y>canvas.height) d.y=0;
+  });
+  requestAnimationFrame(draw);
+}
+draw();
+
+/* TOUCH / CLICK BURST */
+function burst(x,y){
+  for(let i=0;i<20;i++){
+    dots.push({
+      x:x,
+      y:y,
+      r:2,
+      v:-Math.random()*3
+    });
+  }
+}
+
+window.addEventListener("click",e=>burst(e.clientX,e.clientY));
+window.addEventListener("touchstart",e=>{
+  burst(e.touches[0].clientX,e.touches[0].clientY);
+});
+</script>
+
+</body>
+</html>
